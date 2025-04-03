@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -13,11 +13,41 @@
       height: 100%;
       width: 100%;
       font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
     }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .weather-container {
+      width: 100%;
+      max-width: 500px;
+      padding: 1rem;
+    }
+
+    .search-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
     .search-bar input,
     .search-bar button {
       font-size: 1rem;
+      padding: 0.5rem;
+      flex: 1 1 auto;
     }
+
+    .search-bar button {
+      flex: 0 0 auto;
+    }
+
     @media (max-width: 480px) {
       .search-bar {
         flex-direction: column;
@@ -25,10 +55,9 @@
       .search-bar input,
       .search-bar button {
         width: 100%;
-        margin-bottom: 0.5rem;
       }
       .temperature-info h2 {
-        font-size: 3rem;
+        font-size: 2.5rem;
       }
       .weather-details {
         grid-template-columns: 1fr !important;
@@ -44,7 +73,7 @@
       <div class="weather-info">
         <div class="search-bar">
           <input type="text" id="city-search" placeholder="Search city..." />
-          <button id="search-button">Search</button>
+          <button id="search-button" onclick="handleCitySearch()">Search</button>
         </div>
         <div class="location-info">
           <h1 id="location">Loading...</h1>
@@ -57,10 +86,10 @@
         <div class="weather-details">
           <div class="detail"><span class="label">Feels Like</span><span class="value" id="feels-like">--°</span></div>
           <div class="detail"><span class="label">Humidity</span><span class="value" id="humidity">--%</span></div>
-          <div class="detail"><span class="label">Wind</span><span class="value" id="wind">-- mph</span></div>
+          <div class="detail"><span class="label">Wind</span><span class="value" id="wind">-- km/h</span></div>
           <div class="detail"><span class="label">Precipitation</span><span class="value" id="precipitation">--%</span></div>
-          <div class="detail"><span class="label">Pressure</span><span class="value" id="pressure">-- inHg</span></div>
-          <div class="detail"><span class="label">Visibility</span><span class="value" id="visibility">-- mi</span></div>
+          <div class="detail"><span class="label">Pressure</span><span class="value" id="pressure">-- hPa</span></div>
+          <div class="detail"><span class="label">Visibility</span><span class="value" id="visibility">-- km</span></div>
           <div class="detail"><span class="label">UV Index</span><span class="value" id="uv-index">--</span></div>
           <div class="detail"><span class="label">Sunrise</span><span class="value" id="sunrise">--:--</span></div>
           <div class="detail"><span class="label">Sunset</span><span class="value" id="sunset">--:--</span></div>
@@ -70,6 +99,13 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script>
+    function handleCitySearch() {
+      const input = document.getElementById('city-search');
+      const event = new CustomEvent('citySearch', { detail: input.value });
+      window.dispatchEvent(event);
+    }
+  </script>
   <script src="js/app.js"></script>
 </body>
 </html>
